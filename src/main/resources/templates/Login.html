@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Catálogo de Músicas</title>
+
+	<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <link href="/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+ </head>
+
+<body>
+	<div class="container">
+		<div class="jumbotron bg-info text-white">
+			<h1>Catálogo de Músicas</h1>
+			<p class="lead">Catalogue suas músicas preferidas e avalie cada uma delas</p>
+		</div>
+		
+		<div th:if="${mensagem != null}">
+    		<div class="alert alert-info" role="alert">
+    			<span th:text="${mensagem}">mensagem</span>
+    		</div>
+    	</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<h3>Não possui cadastro</h3>
+				<p><a th:href="@{/catalogoDeMusicas/usuarios/cadastro}">Clique aqui</a> para se cadastrar</p>
+			</div>
+			<div class="col-md-6">
+				<h3>Já possui cadastro</h3>
+				<p>Entre com as credencias solicitadas para ter acesso ao sistema:</p>
+				
+				<div th:if="${param.error}">
+                   Email e/ou senha não conferem.
+               </div>
+
+				<div class="col-md-8">
+					<form th:action="@{/catalogoDeMusicas/entrar}" method="POST">
+						<div class="form-group">
+							<label for="email"><b>E-mail</b></label>
+							<input type="email" class="form-control" id="email" placeholder="Seu e-mail" name="username" />
+						</div>
+						<div class="form-group">
+							<label for="senha"><b>Senha</b></label>
+							<input type="password" class="form-control" id="senha" placeholder="Sua senha" name="password"/>
+						</div>
+
+						<div class="form-group">
+							<button class="btn btn-primary" type="submit">Entrar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

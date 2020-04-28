@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catálogo de Músicas</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <link href="/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron bg-info text-white">
+		<h1>Catálogo de Músicas</h1>
+		<p class="lead">Catalogue suas músicas preferidas e avalie cada uma delas</p>
+	</div>
+
+    <div>
+        <a class="btn btn-primary" th:href="@{/catalogoDeMusicas/catalogos/{catalogoId}/musicas/cadastro(catalogoId=${catalogoId})}">Nova música</a>
+    </div>
+
+    <hr/>
+    <div th:if="${musicas != null}">
+        <h4>
+            Músicas do catálogo
+        </h4>
+
+        <div th:if="${mensagem != null}">
+            <div class="alert alert-info" role="alert">
+                <span th:text="${mensagem == null ? '&nbsp;' : mensagem}">mensagem</span>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Banda</th>
+                <th>Nota</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tr th:each="musica : ${musicas}">
+                <td th:text="${musica.titulo}">titulo</td>
+                <td th:text="${musica.banda}">banda</td>
+                <td th:text="${musica.nota}">nota</td>
+                <td>
+                    <a class="btn btn-sm btn-info" th:href="@{/catalogoDeMusicas/catalogos/{catalogoId}/musicas/{musicaId}/atualizar(catalogoId=${catalogoId},musicaId=${musica.id})}">Editar</a>
+                    <a class="btn btn-sm btn-danger" th:href="@{/catalogoDeMusicas/catalogos/{catalogoId}/musicas/{musicaId}/remover(catalogoId=${catalogoId},musicaId=${musica.id})}">Excluir</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(musicas)}">
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            Nenhuma música cadastrada.
+        </div>
+    </div>
+
+    <hr/>
+     
+	<a class="btn btn-light" th:href="@{/catalogoDeMusicas/usuarios/{usuarioId}/catalogos/listar(usuarioId=${#authentication.principal.id})}">Voltar</a>
+</div>                       
+</body>
+</html>

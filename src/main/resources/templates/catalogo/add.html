@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catálogo de Músicas</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <link href="/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron bg-info text-white">
+		<h1>Catálogo de Músicas</h1>
+		<p class="lead">Catalogue suas músicas preferidas e avalie cada uma delas</p>
+	</div>
+
+    <h4>
+        Novo catálogo
+    </h4>
+
+    <form th:action="@{/catalogoDeMusicas/usuarios/{usuarioId}/catalogos/salvar(usuarioId=${usuarioId})}" th:method="${catalogo.id} == 0 ? post : put" th:object="${catalogo}">
+        <div class="row">
+            <input id="id" type="hidden" th:field="*{id}"/>
+            <div class="form-group col-md-4">
+                <label for="nome">Nome:</label>
+                <input class="form-control" id="nome" type="text" th:field="*{nome}"/>
+                <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+            </div>
+
+            <div class="form-group col-md-8">
+                <label for="descricao">Descrição:</label>
+                <input class="form-control" id="descricao" type="text" th:field="*{descricao}"/>
+                <div th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Salvar</button>
+        </div>
+    </form>
+
+    <hr/>
+
+    <a class="btn btn-light" th:href="@{/catalogoDeMusicas/usuarios/{usuarioId}/catalogos/listar(usuarioId=${usuarioId})}">Voltar</a>
+</div>                        
+</body>
+</html>

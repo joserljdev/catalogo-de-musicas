@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catálogo de Músicas</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+    <link href="/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron bg-info text-white">
+		<h1>Catálogo de Músicas</h1>
+		<p class="lead">Catalogue suas músicas preferidas e avalie cada uma delas</p>
+	</div>
+
+		<h4>Novo usuário</h4>
+
+		<div class="container">
+			<form th:action="@{/catalogoDeMusicas/usuarios/salvar}" th:method="post" th:object="${usuario}">
+				<div class="form-group">
+					<label for="nome">Nome</label> 
+					<input type="text" class="form-control" id="nome" th:field="*{nome}"/>
+					<div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" id="email" th:field="*{email}" />
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+					</div>
+	
+					<div class="form-group col-md-4">
+						<label for="password">Senha</label>
+						<input type="password" class="form-control" id="password" th:field="*{senha}"/>
+						<div th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<button class="btn btn-primary btnSalvar" type="submit">Salvar</button>
+						<a class="btn btn-light btnVoltar" th:href="@{/home}">Voltar</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

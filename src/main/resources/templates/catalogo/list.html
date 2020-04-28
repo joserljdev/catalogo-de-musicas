@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catálogo de Músicas</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <link href="/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron bg-info text-white">
+		<h1>Catálogo de Músicas</h1>
+		<p class="lead">Catalogue suas músicas preferidas e avalie cada uma delas</p>
+	</div>
+
+    <div>
+        <a class="btn btn-primary" th:href="@{/catalogoDeMusicas/usuarios/{usuarioId}/catalogos/cadastro(usuarioId=${usuarioId})}">Novo catálogo</a>
+    </div>                        
+    <hr/>
+
+    <div th:if="${catalogos != null}">
+        <h4>
+            Catálogo
+        </h4>
+
+        <div th:if="${mensagem != null}">
+            <div class="alert alert-info" role="alert">
+                <span th:text="${mensagem}">mensagem</span>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tr th:each="catalogo : ${catalogos}">
+                <td>
+                    <a th:text="${catalogo.nome}" th:href="@{/catalogoDeMusicas/catalogos/{id}/musicas/listar(id=${catalogo.id})}">nome</a>
+                </td>
+                <td th:text="${catalogo.descricao}">descricao</td>
+                <td>
+                    <a class="btn btn-sm btn-info" th:href="@{/catalogoDeMusicas/usuarios/{usuarioId}/catalogos/{id}/atualizar(usuarioId=${usuarioId}, id=${catalogo.id})}">Editar</a>
+                    <a class="btn btn-sm btn-danger" th:href="@{/catalogoDeMusicas/usuarios/{usuarioId}/catalogos/{id}/remover(usuarioId=${usuarioId}, id=${catalogo.id})}">Excluir</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(catalogos)}">
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            Você não possui catálogos cadastrados.
+        </div>
+    </div>
+    <hr/>
+
+    <a class="btn btn-light" href="/home">Voltar</a>
+</div>
+</body>
+</html>
